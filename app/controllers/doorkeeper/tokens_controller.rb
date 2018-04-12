@@ -91,6 +91,7 @@ module Doorkeeper
     end
 
     def authorize_response
+      puts "authorize response"
       @authorize_response ||= strategy.authorize
     end
   end

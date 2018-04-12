@@ -5,6 +5,7 @@ module Doorkeeper
     attr_accessor :error
 
     def validate
+      puts "validations validate"
       @error = nil
 
       self.class.validations.each do |validation|

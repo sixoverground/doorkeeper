@@ -6,14 +6,17 @@ module Doorkeeper
       attr_reader :grant_type
 
       def authorize
+        puts "authorize base request"
         validate
 
         if valid?
+          puts "base request is valid"
           before_successful_response
           @response = TokenResponse.new(access_token)
           after_successful_response
           @response
         else
+          puts "base request is not valid"
           @response = ErrorResponse.from_request(self)
         end
       end
