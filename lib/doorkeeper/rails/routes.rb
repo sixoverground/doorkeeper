@@ -4,6 +4,8 @@ require 'doorkeeper/rails/routes/mapper'
 module Doorkeeper
   module Rails
     class Routes # :nodoc:
+      mattr_reader :mapping, default: {}
+
       module Helper
         def use_doorkeeper(options = {}, &block)
           Doorkeeper::Rails::Routes.new(self, &block).generate_routes!(options)
@@ -40,7 +42,11 @@ module Doorkeeper
       private
 
       def map_route(name, method)
-        send(method, @mapping[name]) unless @mapping.skipped?(name)
+       unless @mapping.skipped?(name)
+         send(method, @mapping[name])
+
+         mapping[name] = @mapping[name]
+       end
       end
 
       def authorization_routes(mapping)
