@@ -3,7 +3,7 @@ module Doorkeeper
     def create
       puts "create token"
       response = authorize_response
-      puts "response: #{response}"
+      puts "response: #{response.body.error_description}"
       headers.merge! response.headers
       puts "headers merged"
       self.response_body = response.body.to_json

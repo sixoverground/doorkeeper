@@ -6,6 +6,7 @@ module Doorkeeper
       delegate :authorize, to: :request
 
       def initialize(server)
+        puts "init doorkeeper strategy"
         self.server = server
       end
 
