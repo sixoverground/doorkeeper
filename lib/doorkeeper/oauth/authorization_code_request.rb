@@ -12,12 +12,14 @@ module Doorkeeper
                     :code_verifier
 
       def initialize(server, grant, client, parameters = {})
+        puts "init authorization code request: #{grant}"
         @server = server
         @client = client
         @grant  = grant
         @grant_type = Doorkeeper::OAuth::AUTHORIZATION_CODE
         @redirect_uri = parameters[:redirect_uri]
         @code_verifier = parameters[:code_verifier]
+        puts "recirect_uri: #{@redirect_uri}"
         @client = client_by_uid(parameters) if no_secret_allowed_for_pkce?
       end
 
@@ -30,6 +32,7 @@ module Doorkeeper
       end
 
       def client_by_uid(parameters)
+        puts "find client by uid: #{parameters[:client_id]}"
         Doorkeeper::Application.by_uid(parameters[:client_id])
       end
 
@@ -48,21 +51,25 @@ module Doorkeeper
       end
 
       def validate_attributes
+        puts "validate attributes"
         return false if grant && grant.uses_pkce? && code_verifier.blank?
         return false if grant && !grant.pkce_supported? && !code_verifier.blank?
         redirect_uri.present?
       end
 
       def validate_client
+        puts "validate client"
         !!client
       end
 
       def validate_grant
+        puts "validate grant"
         return false unless grant && grant.application_id == client.id
         grant.accessible?
       end
 
       def validate_redirect_uri
+        puts "validate redirect uri"
         Helpers::URIChecker.valid_for_authorization?(
           redirect_uri,
           grant.redirect_uri
@@ -72,6 +79,7 @@ module Doorkeeper
       # if either side (server or client) request pkce, check the verifier
       # against the DB - if pkce is supported
       def validate_code_verifier
+        puts "validate code verifier"
         return true unless grant.uses_pkce? || code_verifier
         return false unless grant.pkce_supported?
 
