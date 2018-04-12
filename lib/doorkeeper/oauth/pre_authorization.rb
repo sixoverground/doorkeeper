@@ -14,6 +14,7 @@ module Doorkeeper
       attr_writer   :scope
 
       def initialize(server, client, attrs = {})
+        puts "init pre auth"
         @server                = server
         @client                = client
         @response_type         = attrs[:response_type]
@@ -73,6 +74,7 @@ module Doorkeeper
       end
 
       def validate_redirect_uri
+        puts "validate redirect uri: #{redirect_uri}"
         return false if redirect_uri.blank?
 
         Helpers::URIChecker.valid_for_authorization?(

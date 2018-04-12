@@ -7,7 +7,7 @@ module Doorkeeper
     # Semantic versioning
     MAJOR = 4
     MINOR = 3
-    TINY = 3
+    TINY = 4
 
     # Full version number
     STRING = [MAJOR, MINOR, TINY].compact.join('.')
