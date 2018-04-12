@@ -11,6 +11,7 @@ module Doorkeeper
         end
 
         def self.matches?(url, client_url)
+          puts "comparing #{url} to #{client_url}"
           url = as_uri(url)
           client_url = as_uri(client_url)
 
