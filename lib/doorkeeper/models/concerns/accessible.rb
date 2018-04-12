@@ -6,6 +6,8 @@ module Doorkeeper
       # @return [Boolean] true if object accessible or false in other case
       #
       def accessible?
+        puts "expired: #{expired?}"
+        puts "revoked: #{revoked?}"
         !expired? && !revoked?
       end
     end
