@@ -19,7 +19,7 @@ module Doorkeeper
         @grant_type = Doorkeeper::OAuth::AUTHORIZATION_CODE
         @redirect_uri = parameters[:redirect_uri]
         @code_verifier = parameters[:code_verifier]
-        puts "recirect_uri: #{@redirect_uri}"
+        puts "redirect_uri: #{@redirect_uri}"
         @client = client_by_uid(parameters) if no_secret_allowed_for_pkce?
       end
 
@@ -63,8 +63,11 @@ module Doorkeeper
       end
 
       def validate_grant
-        puts "validate grant"
+        puts "validate grant: #{grant}"
+        puts "application id: #{grant.application_id}" if grant
+        puts "client id: #{client.id}"
         return false unless grant && grant.application_id == client.id
+        puts "did not return false"
         grant.accessible?
       end
 
